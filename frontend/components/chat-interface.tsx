@@ -1,14 +1,11 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Send, Music, FileText, Star, StarOff, Loader2 } from "lucide-react"
+import { Music, FileText, Star, StarOff, Loader2 } from "lucide-react"
 import { useFavorites } from "@/components/favorites-context"
 import { cn } from "@/lib/utils"
 
@@ -22,41 +19,47 @@ interface Message {
 
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [selectedMode, setSelectedMode] = useState<"songwriter" | "poem">("songwriter")
   const { addFavorite, removeFavorite, isFavorite } = useFavorites()
 
-  // You'll need to replace these URLs with your actual backend endpoints
+  // input fields
+  const [theme, setTheme] = useState("")
+  const [style, setStyle] = useState("")
+  const [mood, setMood] = useState("")
+
   const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"
 
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return
+    if (!theme.trim() || !style.trim() || (selectedMode === "songwriter" && !mood.trim()) || isLoading) return
 
     const userMessage: Message = {
       id: crypto.randomUUID(),
-      content: input.trim(),
+      content:
+        selectedMode === "songwriter"
+          ? `Theme: ${theme}, Style: ${style}, Mood: ${mood}`
+          : `Theme: ${theme}, Style: ${style}`,
       role: "user",
       timestamp: Date.now(),
     }
 
     setMessages((prev) => [...prev, userMessage])
-    setInput("")
     setIsLoading(true)
 
     try {
-      // Determine endpoint based on selected mode
-      const endpoint = selectedMode === "songwriter" ? "/songwriter" : "/poem"
+      const endpoint = selectedMode === "songwriter" ? "/songwriter" : "/poemwriter"
+
+      const body =
+        selectedMode === "songwriter"
+          ? { theme, style, mood }
+          : { theme, style }
 
       const response = await fetch(`${BACKEND_URL}${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          message: userMessage.content,
-          // Add any additional parameters your backend expects
-        }),
+        body: JSON.stringify(body),
       })
 
       if (!response.ok) {
@@ -67,7 +70,7 @@ export function ChatInterface() {
 
       const assistantMessage: Message = {
         id: crypto.randomUUID(),
-        content: data.response || data.message || "No response received",
+        content: data.lyrics || data.poem || "No response received",
         role: "assistant",
         type: selectedMode,
         timestamp: Date.now(),
@@ -91,18 +94,9 @@ export function ChatInterface() {
     }
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault()
-      handleSend()
-    }
-  }
-
   const toggleFavorite = (message: Message) => {
     if (message.role === "assistant" && message.type) {
       if (isFavorite(message.content)) {
-        // Find and remove the favorite
-        // Note: This is a simplified approach. In a real app, you might want to store message IDs
         removeFavorite(message.content)
       } else {
         addFavorite({
@@ -175,8 +169,8 @@ export function ChatInterface() {
               </p>
               <p className="text-sm">
                 {selectedMode === "songwriter"
-                  ? "Tell me about the theme, mood, or story you want in your song."
-                  : "Share your thoughts, emotions, or themes for your poem."}
+                  ? "Fill in the theme, style, and mood for your song below."
+                  : "Fill in the theme and style for your poem below."}
               </p>
             </div>
           ) : (
@@ -232,26 +226,37 @@ export function ChatInterface() {
         </ScrollArea>
 
         {/* Input Area */}
-        <div className="p-4 border-t">
-          <div className="flex gap-2">
-            <Textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyPress}
-              placeholder={
-                selectedMode === "songwriter"
-                  ? 'Describe your song idea... (e.g., "A love ballad about missing someone")'
-                  : 'Share your poetry inspiration... (e.g., "A poem about autumn leaves")'
-              }
-              className="min-h-[60px] resize-none"
+        <div className="p-4 border-t space-y-2">
+          <input
+            type="text"
+            value={theme}
+            onChange={(e) => setTheme(e.target.value)}
+            placeholder="Enter theme (e.g., lost love, adventure)"
+            className="w-full p-2 rounded bg-gray-800 text-white"
+            disabled={isLoading}
+          />
+          <input
+            type="text"
+            value={style}
+            onChange={(e) => setStyle(e.target.value)}
+            placeholder={selectedMode === "songwriter" ? "Enter style (e.g., rock, ballad, rap)" : "Enter style (e.g., haiku, sonnet)"}
+            className="w-full p-2 rounded bg-gray-800 text-white"
+            disabled={isLoading}
+          />
+          {selectedMode === "songwriter" && (
+            <input
+              type="text"
+              value={mood}
+              onChange={(e) => setMood(e.target.value)}
+              placeholder="Enter mood (e.g., happy, sad, nostalgic)"
+              className="w-full p-2 rounded bg-gray-800 text-white"
               disabled={isLoading}
             />
-            <Button onClick={handleSend} disabled={!input.trim() || isLoading} size="lg" className="px-4">
-              {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-            </Button>
-          </div>
+          )}
 
-          <p className="text-xs text-muted-foreground mt-2">Press Enter to send, Shift+Enter for new line</p>
+          <Button onClick={handleSend} disabled={isLoading} size="lg" className="w-full mt-2">
+            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : selectedMode === "songwriter" ? "Generate Lyrics" : "Generate Poem"}
+          </Button>
         </div>
       </Card>
     </div>

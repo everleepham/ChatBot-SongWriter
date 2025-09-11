@@ -35,7 +35,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  // Save favorites to localStorage whenever they change
+  // Save favorites to localStorage on change
   useEffect(() => {
     localStorage.setItem("ai-writer-favorites", JSON.stringify(favorites))
   }, [favorites])
