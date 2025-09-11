@@ -1,46 +1,41 @@
-import os
-from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from google import genai
-from google.genai import types
+from gemini_client import songwriter, poemwriter
 
-load_dotenv()
-api_key = os.getenv("GENAI_API_KEY")
-client = genai.Client(api_key=api_key)
-
-def generate_lyrics(prompt: str) -> str:
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            thinking_config=types.ThinkingConfig(thinking_budget=2)
-        )
-    )
-    return response.text
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # port frontend Vite
+    allow_origins=["http://localhost:3000"],  # port frontend 
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 class LyricsRequest(BaseModel):
     theme: str
     style: str
     mood: str
+    
+class PoemRequest(BaseModel):
+    theme: str
+    style: str
 
 @app.get("/health")
 def health():
     return {"status": "ok"}
 
-@app.post("/generate_lyrics")
+@app.post("/songwriter")
 def create_lyrics(req: LyricsRequest):
     prompt = f"Write a {req.mood} {req.style} song about {req.theme}"
-    lyrics = generate_lyrics(prompt)
+    lyrics = songwriter(prompt)
     return {"lyrics": lyrics}
+
+
+@app.post("/poemwriter")
+def create_poem(req: PoemRequest):
+    prompt = f"Write a short {req.style} poem about {req.theme}"
+    poem = poemwriter(prompt)
+    return {"poem": poem}
