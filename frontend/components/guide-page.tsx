@@ -7,55 +7,40 @@ import Link from "next/link"
 export function GuidePage() {
   const songwritingTips = [
     {
-      title: "Start with Emotion",
-      description: "Tell the AI about the feeling or story you want to convey. Emotions are the heart of great songs.",
-      example: "Write a melancholic song about missing a childhood friend",
+      title: "Pick a Theme",
+      description: "The main subject of your song. Think of what story or idea you want to express.",
+      example: "Theme: lost love",
     },
     {
-      title: "Specify the Genre",
-      description: "Mention the musical style to get lyrics that fit the vibe you're going for.",
-      example: "Create a country ballad about small-town life",
+      title: "Choose a Style",
+      description: "The musical genre or format. This defines the vibe and rhythm.",
+      example: "Style: ballad",
     },
     {
-      title: "Include Structure Hints",
-      description: "Ask for specific song parts like verses, chorus, or bridge to get a complete song.",
-      example: "Write a pop song with 2 verses, a catchy chorus, and a bridge",
-    },
-    {
-      title: "Use Imagery",
-      description: "Describe scenes, colors, or sensory details to inspire more vivid lyrics.",
-      example: "A song about driving at sunset with golden light and empty highways",
+      title: "Set the Mood",
+      description: "The emotional tone of your song. It guides how the lyrics feel.",
+      example: "Mood: nostalgic",
     },
   ]
 
   const poetryTips = [
     {
-      title: "Choose Your Theme",
-      description: "Give the AI a clear subject or emotion to explore in your poem.",
-      example: "Write a poem about the changing seasons and growing older",
+      title: "Pick a Theme",
+      description: "What is your poem about? It can be emotions, nature, or abstract ideas.",
+      example: "Theme: changing seasons",
     },
     {
-      title: "Specify the Style",
-      description: "Mention if you want a specific poetic form like haiku, sonnet, or free verse.",
-      example: "Create a haiku about morning coffee",
-    },
-    {
-      title: "Use Metaphors",
-      description: "Ask for poems that compare your subject to something unexpected.",
-      example: "A poem comparing heartbreak to a wilting garden",
-    },
-    {
-      title: "Set the Mood",
-      description: "Describe the atmosphere you want - peaceful, intense, mysterious, joyful.",
-      example: "Write a peaceful poem about rain on a quiet afternoon",
+      title: "Choose a Style",
+      description: "The poetic form or writing style.",
+      example: "Style: haiku",
     },
   ]
 
   const features = [
     {
       icon: MessageCircle,
-      title: "Smart Chat Interface",
-      description: "Switch between songwriter and poet modes to get specialized creative assistance.",
+      title: "Simple Input",
+      description: "Just fill in Theme, Style, and Mood for songs — or Theme and Style for poems.",
     },
     {
       icon: Star,
@@ -83,8 +68,8 @@ export function GuidePage() {
           <h1 className="text-4xl font-bold text-primary">Creative Writing Guide</h1>
         </div>
         <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-          Learn how to get the best results from your AI writing assistant. Master the art of prompting for songs and
-          poetry.
+          Learn how to get the best results from your AI writing assistant. Just provide simple keywords for theme,
+          style, and mood.
         </p>
       </div>
 
@@ -101,7 +86,8 @@ export function GuidePage() {
               For Songwriting
             </h3>
             <p className="text-sm text-muted-foreground">
-              Describe the emotion, story, or theme. Mention genre if you have one in mind.
+              Fill in <strong>Theme + Style + Mood</strong>. Example: Theme = "childhood friend", Style = "pop", Mood =
+              "melancholic".
             </p>
           </div>
           <div className="space-y-2">
@@ -110,7 +96,7 @@ export function GuidePage() {
               For Poetry
             </h3>
             <p className="text-sm text-muted-foreground">
-              Share your inspiration, mood, or subject. Specify style if desired.
+              Fill in <strong>Theme + Style</strong>. Example: Theme = "rain in autumn", Style = "haiku".
             </p>
           </div>
         </div>
@@ -150,7 +136,7 @@ export function GuidePage() {
           <Music className="h-6 w-6 text-primary" />
           Songwriting Tips
         </h2>
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           {songwritingTips.map((tip, index) => (
             <Card key={index} className="p-6">
               <div className="flex items-start gap-3">
@@ -164,7 +150,7 @@ export function GuidePage() {
                     <Badge variant="outline" className="mb-2">
                       Example
                     </Badge>
-                    <p className="text-sm italic">"{tip.example}"</p>
+                    <p className="text-sm italic">{tip.example}</p>
                   </div>
                 </div>
               </div>
@@ -193,7 +179,7 @@ export function GuidePage() {
                     <Badge variant="outline" className="mb-2">
                       Example
                     </Badge>
-                    <p className="text-sm italic">"{tip.example}"</p>
+                    <p className="text-sm italic">{tip.example}</p>
                   </div>
                 </div>
               </div>
@@ -212,54 +198,21 @@ export function GuidePage() {
           <div>
             <h3 className="font-medium text-green-600 mb-3">✓ Do This</h3>
             <ul className="space-y-2 text-sm">
-              <li>• Be specific about emotions and themes</li>
-              <li>• Mention genre or style preferences</li>
-              <li>• Use descriptive language and imagery</li>
-              <li>• Ask for specific song/poem structures</li>
-              <li>• Star your favorite creations</li>
-              <li>• Experiment with different prompts</li>
+              <li>• Use clear keywords for theme, style, and mood</li>
+              <li>• Be specific instead of vague</li>
+              <li>• Experiment with different moods or styles</li>
+              <li>• Save your favorite creations</li>
             </ul>
           </div>
           <div>
             <h3 className="font-medium text-red-600 mb-3">✗ Avoid This</h3>
             <ul className="space-y-2 text-sm">
-              <li>• Vague requests like "write a song"</li>
-              <li>• Asking for copyrighted material</li>
-              <li>• Expecting perfect results on first try</li>
-              <li>• Forgetting to save favorites</li>
-              <li>• Not experimenting with different modes</li>
-              <li>• Giving up after one attempt</li>
+              <li>• Leaving inputs empty</li>
+              <li>• Using overly generic words like "something nice"</li>
+              <li>• Expecting perfect results every time</li>
+              <li>• Forgetting to try multiple combinations</li>
             </ul>
           </div>
-        </div>
-      </Card>
-
-      {/* Backend Setup Info */}
-      <Card className="p-6 bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800">
-        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-blue-700 dark:text-blue-300">
-          <Zap className="h-5 w-5" />
-          Backend Configuration
-        </h2>
-        <div className="space-y-3 text-sm">
-          <p>
-            This frontend connects to your Python backend with Google AI integration. Make sure your backend is running
-            and accessible.
-          </p>
-          <div className="bg-white dark:bg-gray-900 p-3 rounded-md border">
-            <p className="font-medium mb-2">Expected Backend Endpoints:</p>
-            <ul className="space-y-1 text-xs font-mono">
-              <li>
-                • <code>POST /songwriter</code> - For song generation
-              </li>
-              <li>
-                • <code>POST /poem</code> - For poetry generation
-              </li>
-            </ul>
-          </div>
-          <p className="text-muted-foreground">
-            Set your backend URL in the environment variable <code>NEXT_PUBLIC_BACKEND_URL</code>
-            or it will default to <code>http://localhost:8000</code>
-          </p>
         </div>
       </Card>
 

@@ -10,8 +10,7 @@ import { Suspense } from "react"
 
 export const metadata: Metadata = {
   title: "AI Songwriter & Poet",
-  description: "Create beautiful songs and poems with AI assistance",
-  generator: "v0.app",
+  description: "Create beautiful songs and poems with AI assistance"
 }
 
 export default function RootLayout({
