@@ -67,19 +67,27 @@ A web application that lets users generate **songs** and **poems** using Google 
 
 ### Backend
 
-1. Create a `.env` file:
+1. Get Gemini API key:
+
+- Access to this link: https://aistudio.google.com/apikey
+- Click: `Create API key`
+
+2. Create a `.env` file:
 
 ```env
 GENAI_API_KEY=your_google_gemini_api_key_here
 NEXT_PUBLIC_BACKEND_URL=your_backend_url
 ```
-2. Install dependencies:
+
+- Normally the app runs at port http://127.0.0.1:8000
+
+3. Install dependencies:
 
 ```bash
 pip install fastapi uvicorn python-dotenv google-genai
 ```
 
-3. Run backend:
+4. Run backend:
 
 ```bash
 uvicorn main:app --reload
@@ -97,8 +105,5 @@ npm install
 ```bash
 npm run dev
 ```
-
----
-## Usage
 
 

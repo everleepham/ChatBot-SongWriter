@@ -16,7 +16,6 @@ export function FavoritesPage() {
   const [selectedTab, setSelectedTab] = useState("all")
   const { toast } = useToast()
 
-  // Filter favorites based on search query and selected tab
   const filteredFavorites = favorites.filter((favorite) => {
     const matchesSearch = favorite.content.toLowerCase().includes(searchQuery.toLowerCase())
     const matchesTab = selectedTab === "all" || favorite.type === selectedTab
@@ -47,11 +46,9 @@ export function FavoritesPage() {
           text: content,
         })
       } catch (error) {
-        // User cancelled sharing or error occurred
         handleCopy(content)
       }
     } else {
-      // Fallback to copy
       handleCopy(content)
     }
   }
