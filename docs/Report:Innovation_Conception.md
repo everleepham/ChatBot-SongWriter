@@ -13,6 +13,12 @@ This project is a web application that allows users to generate **song lyrics** 
 
 The AI then generates creative content tailored to these inputs, making it accessible for beginners, non-technical users, or anyone who wants quick inspiration.
 
+#### Additional Features: 
+  - Search engine in favorites page by song/poem name
+  - Toggle star to save favorite responses (song/poem)
+  - Share/Delete features for favorites song/poem
+  - Guide page for clear and comprehensive instruction
+
 #### 2. Innovation Analysis
 
 - **Market Comparison**:  

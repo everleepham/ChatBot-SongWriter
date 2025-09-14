@@ -65,9 +65,10 @@
 ### E. Data Privacy Concerns
 
 #### Potential Issues
-- **User Input Exposure**: All inputs (Mood/Theme/Style) are sent to the AI API. If users enter personal or sensitive information, it could be processed and temporarily stored externally by the AI provider.
-- **Local Storage Visibility**: Favorites saved in `localStorage` are accessible to anyone with access to the device/browser. 
-- **Indirect Tracking Risks**: If API requests include identifiable information (like username or IP), AI providers may log usage patterns.
+- **User input exposure**: All inputs (Mood/Theme/Style) are sent to the AI API. If users enter personal or sensitive information, it could be processed and temporarily stored externally by the AI provider.
+- **Local storage visibility**: Favorites saved in `localStorage` are accessible to anyone with access to the device/browser. 
+- **Indirect tracking risks**: If API requests include identifiable information (like username or IP), AI providers may log usage patterns.
+  
 
 #### Solutions & Mitigations
 - Only request **keywords** (theme, mood, style) instead of full sentences describing personal stories.

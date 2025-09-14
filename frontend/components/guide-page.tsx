@@ -7,17 +7,17 @@ import Link from "next/link"
 export function GuidePage() {
   const songwritingTips = [
     {
-      title: "Pick a Theme",
+      title: "Pick a theme",
       description: "The main subject of your song. Think of what story or idea you want to express.",
       example: "Theme: lost love",
     },
     {
-      title: "Choose a Style",
+      title: "Choose a style",
       description: "The musical genre or format. This defines the vibe and rhythm.",
       example: "Style: ballad",
     },
     {
-      title: "Set the Mood",
+      title: "Set the mood",
       description: "The emotional tone of your song. It guides how the lyrics feel.",
       example: "Mood: nostalgic",
     },
@@ -25,12 +25,12 @@ export function GuidePage() {
 
   const poetryTips = [
     {
-      title: "Pick a Theme",
+      title: "Pick a theme",
       description: "What is your poem about? It can be emotions, nature, or abstract ideas.",
       example: "Theme: changing seasons",
     },
     {
-      title: "Choose a Style",
+      title: "Choose a style",
       description: "The poetic form or writing style.",
       example: "Style: haiku",
     },
@@ -39,22 +39,22 @@ export function GuidePage() {
   const features = [
     {
       icon: MessageCircle,
-      title: "Simple Input",
+      title: "Simple input",
       description: "Just fill in Theme, Style, and Mood for songs — or Theme and Style for poems.",
     },
     {
       icon: Star,
-      title: "Favorite System",
+      title: "Favorite system",
       description: "Star your best creations and access them anytime in your favorites collection.",
     },
     {
       icon: Heart,
-      title: "Local Storage",
+      title: "Local storage",
       description: "Your favorites are saved locally on your device - no account needed!",
     },
     {
       icon: Zap,
-      title: "Real-time Generation",
+      title: "Real-time generation",
       description: "Get instant creative responses powered by advanced AI technology.",
     },
   ]
@@ -65,10 +65,10 @@ export function GuidePage() {
       <div className="text-center">
         <div className="flex items-center justify-center gap-2 mb-4">
           <BookOpen className="h-8 w-8 text-primary" />
-          <h1 className="text-4xl font-bold text-primary">Creative Writing Guide</h1>
+          <h1 className="text-4xl font-bold text-primary">Creative writing guide</h1>
         </div>
         <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-          Learn how to get the best results from your AI writing assistant. Just provide simple keywords for theme,
+          Learn how to get the best results from your AI writer. Just provide simple keywords for theme,
           style, and mood.
         </p>
       </div>
@@ -77,7 +77,7 @@ export function GuidePage() {
       <Card className="p-6 bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
         <div className="flex items-center gap-2 mb-4">
           <Zap className="h-5 w-5 text-primary" />
-          <h2 className="text-xl font-semibold">Quick Start</h2>
+          <h2 className="text-xl font-semibold">Quick start</h2>
         </div>
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -130,11 +130,11 @@ export function GuidePage() {
         </div>
       </div>
 
-      {/* Songwriting Tips */}
+      {/* Songwriting tips */}
       <div>
         <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
           <Music className="h-6 w-6 text-primary" />
-          Songwriting Tips
+          Songwriting tips
         </h2>
         <div className="grid md:grid-cols-3 gap-4">
           {songwritingTips.map((tip, index) => (
@@ -159,11 +159,11 @@ export function GuidePage() {
         </div>
       </div>
 
-      {/* Poetry Tips */}
+      {/* Poetry tips */}
       <div>
         <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
           <FileText className="h-6 w-6 text-primary" />
-          Poetry Writing Tips
+          Poetry writing tips
         </h2>
         <div className="grid md:grid-cols-2 gap-4">
           {poetryTips.map((tip, index) => (
@@ -192,11 +192,11 @@ export function GuidePage() {
       <Card className="p-6">
         <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
           <Target className="h-5 w-5 text-primary" />
-          Best Practices
+          Best practices
         </h2>
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <h3 className="font-medium text-green-600 mb-3">✓ Do This</h3>
+            <h3 className="font-medium text-green-600 mb-3">✓ Do this</h3>
             <ul className="space-y-2 text-sm">
               <li>• Use clear keywords for theme, style, and mood</li>
               <li>• Be specific instead of vague</li>
@@ -205,7 +205,7 @@ export function GuidePage() {
             </ul>
           </div>
           <div>
-            <h3 className="font-medium text-red-600 mb-3">✗ Avoid This</h3>
+            <h3 className="font-medium text-red-600 mb-3">✗ Avoid this</h3>
             <ul className="space-y-2 text-sm">
               <li>• Leaving inputs empty</li>
               <li>• Using overly generic words like "something nice"</li>
@@ -218,10 +218,10 @@ export function GuidePage() {
 
       {/* Call to Action */}
       <div className="text-center py-8">
-        <h2 className="text-2xl font-bold mb-4">Ready to Create?</h2>
+        <h2 className="text-2xl font-bold mb-4">Ready to create?</h2>
         <p className="text-muted-foreground mb-6">Start your creative journey with AI-powered songwriting and poetry</p>
         <Button size="lg" asChild>
-          <Link href="/">Start Writing Now</Link>
+          <Link href="/">Start writing now</Link>
         </Button>
       </div>
     </div>

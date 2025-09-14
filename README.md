@@ -1,5 +1,11 @@
 # AI Songwriter & Poet
 
+##### Student: Pham Phuong Khanh
+##### Bsc L3 2023
+
+___ 
+## Overview
+
 A web application that lets users generate **songs** and **poems** using Google Gemini AI. Users can provide **theme, style, and mood** (for songs) or **theme and style** (for poems), and get AI-generated content in real time. Users can also favorite outputs for later reference.  
 
 ---
@@ -28,13 +34,18 @@ A web application that lets users generate **songs** and **poems** using Google 
 ## Project Structure
 
 ```
+.
 ├── README.md
 ├── backend
-│   ├── __pycache__
 │   ├── gemini_client.py
 │   ├── main.py
 │   └── requirements.txt
 ├── docs
+│   ├── GenAI-log.md
+│   ├── Report:Analysis_Security.md
+│   ├── Report:Innovation_Conception.md
+│   ├── Summary.md
+│   └── img
 └── frontend
     ├── app
     ├── components
