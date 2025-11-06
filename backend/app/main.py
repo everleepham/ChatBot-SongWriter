@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from backend.app.clients.gemini_client import songwriter, poemwriter
+from backend.app.clients.gemini_client import songwriter
+from backend.app.models.request_models import LyricsRequest
+from backend.app.models.request_models import HummingRequest
 
 
 app = FastAPI()
@@ -13,14 +15,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class LyricsRequest(BaseModel):
-    theme: str
-    style: str
-    mood: str
-    
-class PoemRequest(BaseModel):
-    theme: str
-    style: str
 
 @app.get("/health")
 def health():
@@ -31,10 +25,3 @@ def create_lyrics(req: LyricsRequest):
     prompt = f"Write a {req.mood} {req.style} song about {req.theme}"
     lyrics = songwriter(prompt)
     return {"lyrics": lyrics}
-
-
-@app.post("/poemwriter")
-def create_poem(req: PoemRequest):
-    prompt = f"Write a short {req.style} poem about {req.theme}"
-    poem = poemwriter(prompt)
-    return {"poem": poem}
