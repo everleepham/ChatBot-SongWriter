@@ -1,5 +1,5 @@
 from fastapi import APIRouter, UploadFile, HTTPException
-from app.models.request_models import LyricsRequest, HummingRequest
+from app.models.request_models import LyricsRequest, SongRequest
 from app.models.response_models import LyricsResponse
 from app.services.generator_service import GeneratorService
 import logging
@@ -11,23 +11,22 @@ generator_service = GeneratorService()
 @router.post("/generate/content")
 async def generate_content(
     lyrics_req: LyricsRequest,
-    humming_file: UploadFile = None
-):
+    audio_file: UploadFile = None):
     try:
-        humming_path = None
-        humming_req = HummingRequest()
-        if humming_file:
-            humming_path = f"/tmp/{humming_file.filename}"
-            with open(humming_path, "wb") as f:
-                f.write(await humming_file.read())
-            humming_req.audio_file_path = humming_path
+        audio_path = None
+        song_req = SongRequest()
+        if audio_file:
+            audio_path = f"/tmp/{audio_file.filename}"
+            with open(audio_path, "wb") as f:
+                f.write(await audio_file.read())
+            # song_req.audio_file_path = audio_path
 
-        humming_req.style = lyrics_req.style
+        song_req.style = lyrics_req.style
 
         final_song_path = generator_service.generate_song_from_lyrics_and_humming(
             lyrics_req=lyrics_req,
-            humming_req=humming_req,
-            humming_path=humming_file
+            song_req=song_req,
+            audio_path=audio_path
         )
 
         return {

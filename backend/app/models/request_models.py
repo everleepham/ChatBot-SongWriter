@@ -7,7 +7,7 @@ class LyricsRequest(BaseModel):
     mood: str
     language: str = "English"
 
-class HummingRequest(BaseModel):
+class SongRequest(BaseModel):
     style: Optional[str] = None
     theme: Optional[str] = None
     length_seconds: int = 30

@@ -13,7 +13,7 @@ class GeneratorService:
         self.audio_service = AudioService()
         self.karaoke_service = KaraokeService()
 
-    def generate_song_from_lyrics_and_humming(self, lyrics_req: LyricsRequest, humming_req: HummingRequest, humming_path) -> str:
+    def generate_song_from_lyrics_and_humming(self, lyrics_req: LyricsRequest, humming_req: HummingRequest, audio_path) -> str:
         """
         Orchestrate the generation:
         1. Build prompts using PromptBuilder
@@ -28,9 +28,9 @@ class GeneratorService:
         logging.info(f"Lyrics generated: {lyrics[:100]}...")
 
         logging.info("Extracting melody from humming input.")
-        # extract meolody from humming
+        # extract meolody from audio file
         melody_path = self.audio_service.extract_melody_from_humming(
-            humming_path=humming_path, 
+            audio_path=audio_path, 
             style=prompt_builder.style
         )
 
@@ -51,11 +51,15 @@ class GeneratorService:
 
         # extend melody using musicgen
         logging.info("Extending melody using MusicGen.")
-        final_melody_path = self.musicgen.generate_melody_from_seed(
+        midi_final_melody_path = self.musicgen.generate_melody_from_seed(
             seed_audio_path=melody_path,
             style=prompt_builder.style,
             length_seconds=prompt_builder.length_seconds
         )
+
+        # convert final melody to mp3
+        logging.info("Converting final melody MIDI to MP3 format.")
+        final_melody_path = self.audio_service.convert_midi_to_mp3(midi_final_melody_path)
         
         logging.info("Combining lyrics and melody into final song.")
         final_song_path = self.karaoke_service.combine_lyrics_and_melody(lyrics, final_melody_path)

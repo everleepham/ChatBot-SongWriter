@@ -21,10 +21,6 @@ class AudioService:
         logging.info("Converting MIDI to MP3...")
         return "path/to/converted/audio.mp3"
     
-    def convert_midi_to_wav(self, midi_path: str) -> str:
-        logging.info("Converting MIDI to WAV...")
-        return "path/to/converted/audio.wav"
-    
     def convert_mp3_to_midi(self, mp3_path: str) -> str:
         logging.info("Converting MP3 to MIDI...")
         return "path/to/converted/audio.mid"
