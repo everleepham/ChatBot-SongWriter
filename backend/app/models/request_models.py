@@ -10,8 +10,9 @@ class LyricsRequest(BaseModel):
 class HummingRequest(BaseModel):
     style: Optional[str] = None
     theme: Optional[str] = None
-    instrument_type: Optional[str] = None
+    length_seconds: int = 30
+    instrument_type: str = "piano"
 
 class TitleRequest(BaseModel):
-    lyrics: LyricsRequest
+    lyrics: str
 

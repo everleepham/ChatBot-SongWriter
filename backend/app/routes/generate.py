@@ -13,28 +13,25 @@ async def generate_content(
     lyrics_req: LyricsRequest,
     humming_file: UploadFile = None
 ):
-    """
-    Endpoint to generate song from lyrics + optional humming audio.
-    """
     try:
-        logging.info("Received generate request")
-
-        # Save uploaded humming file if exists
         humming_path = None
+        humming_req = HummingRequest()
         if humming_file:
-            # TODO: save file to temp path, return path
             humming_path = f"/tmp/{humming_file.filename}"
-            # TODO: implement save_uploaded_file from audio_utils
+            with open(humming_path, "wb") as f:
+                f.write(await humming_file.read())
+            humming_req.audio_file_path = humming_path
 
-        # Orchestrate generation
+        humming_req.style = lyrics_req.style
+
         final_song_path = generator_service.generate_song_from_lyrics_and_humming(
-            lyrics_prompt=f"{lyrics_req.theme}, {lyrics_req.style}, {lyrics_req.mood}",
-            humming_path=humming_path,
-            style=lyrics_req.style
+            lyrics_req=lyrics_req,
+            humming_req=humming_req,
+            humming_path=humming_file
         )
 
         return {
-            "lyrics": f"{lyrics_req.theme} - {lyrics_req.style} - {lyrics_req.mood}",
+            "lyrics": lyrics_req.theme,
             "final_song_path": final_song_path
         }
 

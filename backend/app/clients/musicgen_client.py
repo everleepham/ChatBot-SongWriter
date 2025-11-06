@@ -18,7 +18,6 @@ client = None  # Placeholder for actual music generation client
 class MusicGenClient:
     """
     Wrapper for music generation API.
-    TODO: currently dummy methods for testing API integration.
     """
 
     def __init__(self):
@@ -36,19 +35,8 @@ class MusicGenClient:
         Output:
             path to generated melody (dummy: return same file or placeholder path)
         """
-        # TODO: implement API call later
         return "dummypath/to/generated/melody.mid"
 
-    def midi_to_audio(self, midi_path: str, output_path: str) -> str:
-        """
-        Input:
-            midi_path: path to MIDI file
-            output_path: path to export audio
-        Output:
-            path to generated audio (dummy: return output_path directly)
-        """
-        # TODO: implement conversion later
-        return output_path
 
     def generate_song_from_lyrics(self, lyrics_text: str, melody_audio_path: str = None) -> str:
         """

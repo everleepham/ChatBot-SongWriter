@@ -85,7 +85,7 @@ class GeminiClient:
     def generate_title(self, title_prompt: str) -> str:
         try: 
             logging.info(f"[GeminiClient] Generating title with prompt: {title_prompt[:100]}...")
-            result =  self.generate_content(title_prompt, model="gemini-2.5-flash", thinking_budget=1)
+            result = self.generate_content(title_prompt, model="gemini-2.5-flash", thinking_budget=1)
             logging.info(f"[GeminiClient] Title generation completed.")
             return result
         except Exception as e:

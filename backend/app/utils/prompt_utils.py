@@ -1,24 +1,26 @@
+from app.models.request_models import LyricsRequest
+from app.models.request_models import HummingRequest
+
 class PromptBuilder:
-    def __init__(self, theme: str, style: str = "pop", mood: str = "happy", language: str = "English"):
-        self.theme = theme
-        self.style = style
-        self.mood = mood
-        self.language = language
+    def __init__(self, lyrics_req: LyricsRequest, humming_req: HummingRequest):
+        self.theme = lyrics_req.theme
+        self.style = lyrics_req.style
+        self.mood = lyrics_req.mood
+        self.language = lyrics_req.language or "English"
+        self.instrument_type = humming_req.instrument_type or "piano"
+        self.length_seconds = humming_req.length_seconds or 30
 
-    def lyrics(self, theme: str = None, style: str = None, mood: str = None, language: str = None) -> str:
+    def lyrics(self) -> str:
         """Generate a prompt to create song lyrics."""
-        theme = theme or self.theme
-        style = style or self.style
-        mood = mood or self.mood
-        language = language or self.language
-        return f"Write a {mood} {style} song about {theme} in {language}."
+        return f"Write a {self.mood} {self.style} song about {self.theme} in {self.language}."
 
-    def melody(self, seed_midi_path: str, style: str = None, length_seconds: int = 30) -> str:
+    def melody(self, seed_midi_path: str) -> str:
         """Generate a prompt to extend a melody from a seed MIDI/audio."""
-        style = style or self.style
-        return f"Extend the melody from {seed_midi_path} in {style} style to {length_seconds} seconds."
-
-    def share_caption(self, content_type: str = "song", theme: str = None) -> str:
-        """Generate a prompt/caption for sharing content on social media."""
-        theme = theme or self.theme
-        return f"Check out my new {content_type} inspired by {theme}! 🎵"
+        return f"Extend the melody from {seed_midi_path} in {self.style} style to {self.length_seconds} seconds."
+    
+    def title(self, lyrics: str, language: str) -> str:
+        """Generate a prompt to create a song title."""
+        return f"Create a short catchy title for this {self.mood} song with lyrics: {lyrics} in {language}."
+    # def share_caption(self, content_type: str = "song", theme: str = None) -> str:
+    #     """Generate a prompt/caption for sharing content on social media."""
+    #     return f"Check out my new {content_type} inspired by {theme}! 🎵"
