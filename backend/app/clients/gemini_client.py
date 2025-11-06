@@ -1,20 +1,11 @@
-import os
 import logging
-from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from asyncio import to_thread
-
-load_dotenv()
-API_KEY = os.getenv("GENAI_API_KEY")
+from app.core.config import GEN_API_KEY
 
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="[%(asctime)s] [%(levelname)s] %(message)s"
-)
-
-client = genai.Client(api_key=API_KEY)
+client = genai.Client(api_key=GEN_API_KEY)
 
 class GeminiClient:
     """
@@ -24,10 +15,9 @@ class GeminiClient:
         - generate_song
         - generate_melody
     """
-
     def __init__(self, client):
         self.client = client
-        if not API_KEY:
+        if not GEN_API_KEY:
             raise ValueError("GENAI_API_KEY not found. Please check your .env file.")
         logging.info("GeminiClient initialized successfully.")
 

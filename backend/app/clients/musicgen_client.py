@@ -2,16 +2,8 @@ import os
 import logging
 from dotenv import load_dotenv
 from asyncio import to_thread
+from app.core.config import MUSIC_API_KEY
 
-load_dotenv()
-
-API_KEY = os.getenv("MUSIC_API_KEY")
-
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="[%(asctime)s] [%(levelname)s] %(message)s"
-)
 
 client = None  # Placeholder for actual music generation client
 
@@ -22,8 +14,8 @@ class MusicGenClient:
 
     def __init__(self):
         self.client = client
-        if not API_KEY:
-            raise ValueError("MUSIC_API_KEY not found. Please check your .env file.")
+        # if not MUSIC_API_KEY:
+        #     raise ValueError("MUSIC_API_KEY not found. Please check your .env file.")
         logging.info("... initialized successfully.")
 
     def generate_melody_from_seed(self, seed_audio_path: str, style: str, length_seconds: int) -> str:
