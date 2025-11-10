@@ -24,7 +24,9 @@ async def generate_lyrics(lyrics_req: LyricsRequest, title_language):
     except Exception as e:
         logging.error(f"Error generating lyrics: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+    
 
+@router.post("/generate/melody")
     
 @router.post("/generate/content")
 async def generate_content(
@@ -46,7 +48,6 @@ async def generate_content(
             song_req=song_req,
             audio_path=audio_path
         )
-
         return {
             "lyrics": lyrics_req.theme,
             "final_song_path": final_song_path

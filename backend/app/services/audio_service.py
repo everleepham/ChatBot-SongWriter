@@ -4,13 +4,13 @@ class AudioService:
     def __init__(self):
         logging.info("AudioService initialized.")
 
-    def extract_melody_from_humming(self, humming_path: str, style: str) -> str:
+    def extract_melody_from_audio(self, audio_path: str, style: str) -> str:
         """
         Input: path to user hummed audio
         Output: path to extracted/generated melody
         TODO: dummy return for now
         """
-        logging.info(f"Extracting melody from {humming_path} with style {style}...")
+        logging.info(f"Extracting melody from {audio_path} with style {style}...")
         return "path/to/generated/melody.mid"
     
     def clean_audio(self, audio_path: str) -> str:
