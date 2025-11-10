@@ -22,7 +22,7 @@ class GeminiClient:
         logging.info("GeminiClient initialized successfully.")
 
 
-    async def generate_content(self, prompt: str, model: str, thinking_budget: int) -> str:
+    async def output_content(self, prompt: str, model: str, thinking_budget: int) -> str:
         """
         - Call Gemini API with given model & prompt
         - Return generated text
@@ -50,7 +50,7 @@ class GeminiClient:
             logging.info(f"[GeminiClient] Response received ({len(text)} chars).")
             return text
 
-    def generate_song(self, prompt: str) -> str:
+    def output_lyrics(self, prompt: str) -> str:
         try:
             logging.info(f"[GeminiClient] Generating song with prompt: {prompt[:100]}...")
             result = self.generate_content(prompt, model="gemini-2.5-flash", thinking_budget=3)
@@ -61,7 +61,7 @@ class GeminiClient:
             raise
 
 
-    def generate_melody(self, melody_prompt: str) -> str:
+    def output_melody(self, melody_prompt: str) -> str:
         """
         TODO: Call music generation client (MusicGen / Chirp / etc.)
         Steps:
@@ -72,7 +72,7 @@ class GeminiClient:
         pass
 
 
-    def generate_title(self, title_prompt: str) -> str:
+    def output_title(self, title_prompt: str) -> str:
         try: 
             logging.info(f"[GeminiClient] Generating title with prompt: {title_prompt[:100]}...")
             result = self.generate_content(title_prompt, model="gemini-2.5-flash", thinking_budget=1)

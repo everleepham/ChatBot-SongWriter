@@ -1,5 +1,5 @@
 from fastapi import APIRouter, UploadFile, HTTPException
-from app.models.request_models import LyricsRequest, SongRequest
+from app.models.request_models import LyricsRequest, SongRequest, TitleRequest
 from app.models.response_models import LyricsResponse
 from app.services.generator_service import GeneratorService
 import logging
@@ -8,12 +8,30 @@ router = APIRouter()
 generator_service = GeneratorService()
 
 
+@router.post("/generate/lyrics")
+async def generate_lyrics(lyrics_req: LyricsRequest, title_language):
+    try:
+        lyrics = generator_service.generate_lyrics(lyrics_req)
+
+        title_req = TitleRequest(lyrics=lyrics)
+        title = generator_service.generate_title(title_req, title_language)
+
+        return {
+            "title": title,
+            "lyrics": lyrics
+        }
+
+    except Exception as e:
+        logging.error(f"Error generating lyrics: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
+    
 @router.post("/generate/content")
 async def generate_content(
     lyrics_req: LyricsRequest,
     audio_file: UploadFile = None):
     try:
-        audio_path = None
+        audio_path = audio_file.filename if audio_file else None
         song_req = SongRequest()
         if audio_file:
             audio_path = f"/tmp/{audio_file.filename}"
@@ -37,3 +55,4 @@ async def generate_content(
     except Exception as e:
         logging.error(f"Error generating content: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+

@@ -2,7 +2,7 @@ from app.clients.gemini_client import GeminiClient
 from app.clients.musicgen_client import MusicGenClient
 from app.services.audio_service import AudioService
 from app.services.karaoke_service import KaraokeService
-from app.models.request_models import LyricsRequest, HummingRequest
+from app.models.request_models import LyricsRequest, HummingRequest, TitleRequest
 from app.utils.prompt_utils import PromptBuilder
 import logging
 
@@ -12,6 +12,24 @@ class GeneratorService:
         self.musicgen = MusicGenClient() # dummy for now
         self.audio_service = AudioService()
         self.karaoke_service = KaraokeService()
+
+    def generate_lyrics(self, lyrics_req: LyricsRequest) -> str:
+        """
+        Generate song lyrics using GeminiClient
+        """
+        prompt_builder = PromptBuilder(lyrics_req)
+        lyrics_prompt = prompt_builder.lyrics()
+        lyrics = self.gemini.output_song(lyrics_prompt)
+        return lyrics
+    
+    def generate_title(self, lyrics_req: LyricsRequest, title_req: TitleRequest, language="English") -> str:
+        """
+        Generate song title using GeminiClient
+        """
+        prompt_builder = PromptBuilder(lyrics_req)
+        title_prompt = prompt_builder.title(title_req , language)
+        title = self.gemini.output_title(title_prompt)
+        return title
 
     def generate_song_from_lyrics_and_humming(self, lyrics_req: LyricsRequest, humming_req: HummingRequest, audio_path) -> str:
         """
@@ -47,7 +65,6 @@ class GeneratorService:
             self.audio_service.convert_wav_to_midi
             logging.error(f"Converting melody at {melody_path} to MIDI...")
         logging.error("Cannot convert melody to MIDI: unsupported format.")
-
 
         # extend melody using musicgen
         logging.info("Extending melody using MusicGen.")
