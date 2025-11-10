@@ -27,6 +27,30 @@ async def generate_lyrics(lyrics_req: LyricsRequest, title_language):
     
 
 @router.post("/generate/melody")
+async def generate_melody(
+    lyrics_req: LyricsRequest,
+    song_req: SongRequest,
+    audio_file: UploadFile):
+    try:
+        audio_path = f"/tmp/{audio_file.filename}"
+        with open(audio_path, "wb") as f:
+            f.write(await audio_file.read())
+        # song_req.audio_file_path = audio_path
+
+        final_melody_path = generator_service.generate_melody_from_audio(
+            lyrics_req=lyrics_req,
+            song_req=song_req,
+            audio_path=audio_path
+        )
+        return {
+            "lyrics": lyrics_req.theme,
+            "final_melody_path": final_melody_path
+        }
+
+    except Exception as e:
+        logging.error(f"Error generating melody: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+    
     
 @router.post("/generate/content")
 async def generate_content(

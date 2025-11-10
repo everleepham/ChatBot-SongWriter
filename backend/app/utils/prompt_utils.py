@@ -1,21 +1,16 @@
-from app.models.request_models import LyricsRequest
-from app.models.request_models import HummingRequest
+from app.models.request_models import LyricsRequest, SongRequest
 
 class PromptBuilder:
     def __init__(self, lyrics_req: LyricsRequest = None):
-        self.theme = lyrics_req.theme if lyrics_req else None
-        self.style = lyrics_req.style if lyrics_req else None
-        self.mood = lyrics_req.mood if lyrics_req else None
-        self.language = lyrics_req.language or "English"
-
+        self.lyric_req = lyrics_req if lyrics_req else None
 
     def lyrics(self) -> str:
         """Generate a prompt to create song lyrics."""
-        return f"Write a {self.mood} {self.style} song about {self.theme} in {self.language}."
+        return f"Write a {self.lyric_req.mood} {self.lyric_req.style} song about {self.lyric_req.theme} in {self.language}."
 
-    def melody(self, seed_midi_path: str, length_seconds: int) -> str:
+    def melody(self, seed_midi_path: str, seconds) -> str:
         """Generate a prompt to extend a melody from a seed MIDI/audio."""
-        return f"Extend the melody from {seed_midi_path} in {self.style} style to {length_seconds} seconds."
+        return f"Extend the melody from {seed_midi_path} into a {self.lyric_req.style} melody about {self.lyric_req.theme} for {seconds}."
     
     def song(self, lyrics: str, melody_path: str) -> str:
         """Generate a prompt to create a full song from lyrics and melody."""

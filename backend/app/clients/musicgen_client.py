@@ -18,7 +18,7 @@ class MusicGenClient:
         #     raise ValueError("MUSIC_API_KEY not found. Please check your .env file.")
         logging.info("... initialized successfully.")
 
-    def generate_melody_from_seed(self, seed_audio_path: str, style: str, length_seconds: int) -> str:
+    def music_output_melody_from_seed(self, seed_audio_path: str, style: str, length_seconds: int) -> str:
         """
         Input:
             seed_audio_path: path to user hummed audio
@@ -30,7 +30,7 @@ class MusicGenClient:
         return "dummypath/to/generated/melody.mid"
 
 
-    def generate_song_from_lyrics(self, lyrics_text: str, melody_audio_path: str = None) -> str:
+    def music_output_song_from_lyrics(self, lyrics_text: str, melody_audio_path: str = None) -> str:
         """
         Input:
             lyrics_text: generated lyrics

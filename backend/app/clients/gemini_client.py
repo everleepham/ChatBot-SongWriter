@@ -22,7 +22,7 @@ class GeminiClient:
         logging.info("GeminiClient initialized successfully.")
 
 
-    async def output_content(self, prompt: str, model: str, thinking_budget: int) -> str:
+    async def generate_content(self, prompt: str, model: str, thinking_budget: int) -> str:
         """
         - Call Gemini API with given model & prompt
         - Return generated text
